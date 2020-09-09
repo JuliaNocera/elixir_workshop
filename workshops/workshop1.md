@@ -214,3 +214,28 @@ If you would like to see all of the available tasks that can be run in a `mix`
 project, use the `mix help` command. To get more detailed documentation on a
 task, run `mix help` with the name of the task. For example, to get more
 detailed documentation on the `mix test` command, run `mix help test`.
+
+## Today's task
+
+My hope is that you have read, or partially read the 1st and 2nd chapter of the
+Elixir in Action book. We will be using some of the concepts from those chapters
+to implement our task.
+
+Our task today is to implement an HTTP response parser. We will be using test
+driven development to drive the implementation of our module.
+
+The project has a single module named `HttpResponseParser`, defined at
+`lib/http_response_parser.ex`. Inside of this module, you will see a single
+function: `HttpResponseParser.parse/1`. Our goal is to implement this function
+given a variety of HTTP responses from the Pokeapi. Our parser will allow us to
+take a response and extract the body of the response, optionally parsing it into
+JSON. We will also need to handle errors. Our parser will allow us to easily
+pattern match on the result and extract the contents of the body.
+
+**Additional info for the nerds**:
+
+Our tests today are using a simplified response from the [Poke
+API](https://pokeapi.co/). The structure I used was created from a library
+called [`HTTPoision`](http://hexdocs.pm/httpoison), which is an HTTP client for
+Elixir. While the data is simplified, you will find the structure to look almost
+identical to the `%HTTPoision.Response{}` struct.
