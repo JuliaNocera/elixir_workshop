@@ -239,3 +239,29 @@ API](https://pokeapi.co/). The structure I used was created from a library
 called [`HTTPoision`](http://hexdocs.pm/httpoison), which is an HTTP client for
 Elixir. While the data is simplified, you will find the structure to look almost
 identical to the `%HTTPoision.Response{}` struct.
+
+### Elixir concepts
+
+#### Maps
+
+Maps are key/value pairs, akin to a JavaScript object.
+
+```elixir
+%{make: "Subaru", model: "Ascent"}
+```
+
+Keys can be atoms, or they can be strings:
+
+```elixir
+%{"make" => "Subaru", "model" => "Ascent"}
+```
+
+Note that when using string keys, you must use the hash rocket syntax to define
+the relationship. Keys that are atoms can also be specified using the hash
+rocket syntax
+
+```elixir
+%{:make => "Subaru", :model => "Ascent"}
+```
+
+The first variant is a shorthand for keys that are atoms.
