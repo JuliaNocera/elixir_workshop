@@ -232,7 +232,7 @@ take a response and extract the body of the response, optionally parsing it into
 JSON. We will also need to handle errors. Our parser will allow us to easily
 pattern match on the result and extract the contents of the body.
 
-**Additional info for the nerds**:
+**For the nerds**:
 
 Our tests today are using a simplified response from the [Poke
 API](https://pokeapi.co/). The structure I used was created from a library
@@ -241,6 +241,68 @@ Elixir. While the data is simplified, you will find the structure to look almost
 identical to the `%HTTPoision.Response{}` struct.
 
 ### Elixir concepts
+
+Elixir is a functional language. There are no classes or instances of object
+types. Data is also immutable. You work with data by creating modules, and
+functions within those modules to transform the data. Because data is immutable,
+modifications to any data type result in a new instance of that data rather than
+modifying it in-place.
+
+#### Modules
+
+You define a module with the `defmodule` macro. For example, to define an
+`HttpResponseParser` module, use the following:
+
+```elixir
+defmodule HttpResponseParser do
+  # HttpResponseParser implementation
+end
+```
+
+##### Definining functions
+
+To define a function on that module, use the `def` macro:
+
+```elixir
+defmodule HttpResponseParser do
+  def parse(response) do
+    # the function implementation
+  end
+end
+```
+
+In fact, this module is already created for in this project. This is where you
+will be implementing the code for today's session.
+
+##### Private functions
+
+You can create private functions that are only accessible to other functions
+within the module by using the `defp` macro:
+
+```elixir
+defmodule HttpResponseParser do
+  def parse(response) do
+    status_code(response)
+  end
+
+  defp status_code(response) do
+    # implementation
+  end
+end
+```
+
+##### Function definition shorthand
+
+Often times you'll have a function that only needs a single line of
+implentation. There is a shorthand that you can use to write the function more
+tersely:
+
+```elixir
+defp status_code(response), do: response.status_code
+```
+
+Here you can see that rather than using the `do...end` syntax, we use the
+keyword `do:` and provide the result of the function after it.
 
 #### Maps
 
@@ -265,3 +327,59 @@ rocket syntax
 ```
 
 The first variant is a shorthand for keys that are atoms.
+
+Use the [`Map` module](https://hexdocs.pm/elixir/Map.html#content) to interact
+with map types.
+
+#### Lists
+
+Unlike other languages, Elixir implements lists in the form of a linked list.
+The syntax is very similar to an array from other languages, but they have very
+different performance characteristics. To learn more about the differences,
+please read the Elixir in Action book, which goes much more in depth.
+
+Lists are defined using syntax like arrays in other languages:
+
+```elixir
+counts = [1, 2, 3]
+```
+
+Use the [`List` module](https://hexdocs.pm/elixir/List.html#content), or more
+commonly, the [`Enum` module](https://hexdocs.pm/elixir/Enum.html#content) to
+interact with lists.
+
+#### Tuples
+
+Tuples are fixed-size containers that hold multiple elements. You define a tuple
+using the `{}` syntax (no `%` in front of it, which would indicate a `Map`).
+
+```elixir
+{:one, "2", 3}
+```
+
+They are used in a variety of ways, but are most commonly used to communicate
+success or failure. These take the form of `{:ok, result}` or `{:error, reason}`
+to communicate the result of a function call. For example, when using the
+`File.read/1` function:
+
+```elixir
+iex> File.read("lib/http_response_parser.ex")
+{:ok, "defmodule HttpResponseParser do\n ..."}
+
+iex> File.read("lib/does_not_exist.ex")
+{:error, :enoent}
+```
+
+These are useful for pattern matching:
+
+```elixir
+iex> {:ok, contents} = File.read("lib/http_response_parser.ex")
+iex> contents
+"defmodule HttpResponseParser do\n ..."
+
+iex> case File.read("lib/http_response_parser.ex") do
+...>   {:ok, contents} -> IO.puts("Success #{contents}")
+...>   {:error, reason} -> "Error!!!"
+...> end
+"Success defmodule HttpResponseParser do\n ..."
+```
