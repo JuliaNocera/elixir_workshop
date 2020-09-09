@@ -109,3 +109,108 @@ Compiling 1 file (.ex)
 iex> HttpResponseParser.parse(%{})
 :todo
 ```
+
+## `Mix`
+
+Per the [documentation](https://hexdocs.pm/mix):
+
+> Mix is a build tool that provides tasks for creating, compiling, and testing
+> Elixir projects, managing its dependencies, and more.
+
+We will be using `mix` today to install dependencies and run our tests. `mix` is
+akin to Node's `npm` tool.
+
+### `mix.exs`
+
+The `mix.exs` file defins our Elixir project. Here you can see information about
+our app, such as its version, or the compatible Elixir versions. This is the
+file that you will update when you need to install dependencies for your
+project.
+
+To learn more about configuring the project, read the [`mix`
+documentation](https://hexdocs.pm/mix).
+
+### Installing dependencies
+
+Our project currently has no dependencies, as evidenced by the empty list in the
+`deps/0` function inside our `mix.exs` file.
+
+```elixir
+defp deps do
+  []
+end
+```
+
+You will see a comment inside of there with instructions to install the
+[`Jason`](https://hexdocs.pm/jason) library. `Jason` is a JSON parser and
+generator written using pure Elixir. We will be using this for our workshop
+today.
+
+To install `Jason`, uncomment the line that specifies the dependency. Feel free
+to remove the other comments. Your `deps/0` function should now look like the
+following:
+
+```elixir
+defp deps do
+  [
+    {:jason, "~> 1.2"}
+  ]
+end
+```
+
+To install the dependencies, run the following:
+
+```sh
+mix deps.get
+```
+
+After you run this, you should see a `mix.lock` file created in the repo.
+
+**NOTE:** If you have not yet installed hex (Elixir's package manager), you will
+be prompted to do so. You'll see a message like the following:
+
+```sh
+Could not find Hex, which is needed to build dependency :jason
+Shall I install Hex? (if running non-interactively, use "mix local.hex --force") [Yn]
+```
+
+Type `Y` to install `hex`. This should only happen once.
+
+### Running tests
+
+To run tests, use the following command:
+
+```sh
+mix test
+```
+
+This will run all tests in your application under the `test` directory named
+with the `_test.exs` suffix.
+
+You can run a single test file by passing the file path to `mix test`:
+
+```sh
+mix test test/http_response_parser_test.exs
+```
+
+You can also run a single test in a file by appending the line number:
+
+```sh
+mix test test/http_response_parser_test.exs:11
+```
+
+**NOTE**:
+
+For our workshop today, you will notice that some of the tests are skipped. You
+will see the `@tag :pending` attribute definition placed above some of the
+tests. By default these are skipped. This will allow you to work at your own
+pace and get to a green test before moving onto more complicated functionality.
+
+Simply remove the `@tag :pending` statement to run that test as part of `mix test`.
+
+### `mix help`
+
+If you would like to see all of the available tasks that can be run in a `mix`
+project, use the `mix help` command. To get more detailed documentation on a
+task, run `mix help` with the name of the task. For example, to get more
+detailed documentation on the `mix test` command, run `mix help test`.
