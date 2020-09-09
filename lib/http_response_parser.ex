@@ -1,4 +1,4 @@
-defmodule ElixirWorkshop.HttpResponseParser do
+defmodule HttpResponseParser do
   @moduledoc """
   Parser that handles transformations on an http response
   """

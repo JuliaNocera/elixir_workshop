@@ -1,78 +1,6 @@
-defmodule ElixirWorkshop.HttpResponseParserTest do
-  use ExUnit.Case
+defmodule Pokeapi.TestData do
+  @moduledoc false
 
-  alias ElixirWorkshop.{HttpResponseParser, Response}
-
-  test "Parses 200 responses as successful" do
-    assert {:ok, _} = HttpResponseParser.parse(@json)
-  end
-
-  @tag :pending
-  test "Decodes JSON responses" do
-    assert {:ok,
-            %{
-              "forms" => [
-                %{
-                  "name" => "ditto",
-                  "url" => "https://pokeapi.co/api/v2/pokemon-form/132/"
-                }
-              ],
-              "height" => 3,
-              "id" => 132,
-              "is_default" => true,
-              "name" => "ditto",
-              "order" => 203,
-              "types" => [
-                %{
-                  "slot" => 1,
-                  "type" => %{
-                    "name" => "normal",
-                    "url" => "https://pokeapi.co/api/v2/type/1/"
-                  }
-                }
-              ],
-              "weight" => 40
-            }} = HttpResponseParser.parse(@json)
-  end
-
-  @tag :pending
-  test "Handles plain text responses" do
-    assert {:ok, "Ditto"} = HttpResponseParser.parse(@plain_text)
-  end
-
-  @tag :pending
-  test "Parses 204 response as empty body" do
-    assert {:ok, ""} = HttpResponseParser.parse(@no_content)
-  end
-
-  @tag :pending
-  test "parses 404 as not found" do
-    assert {:error, :not_found} = HttpResponseParser.parse(@not_found)
-  end
-
-  @tag :pending
-  test "parses 401 as unauthorized" do
-    assert {:error, :unauthorized} = HttpResponseParser.parse(@unauthorized)
-  end
-
-  @tag :pending
-  test "parses other 4xx responses as bad request" do
-    assert {:error, :bad_request} =
-             HttpResponseParser.parse(%{@unauthorized | status_code: 402})
-
-    assert {:error, :bad_request} =
-             HttpResponseParser.parse(%{@unauthorized | status_code: 409})
-
-    assert {:error, :bad_request} =
-             HttpResponseParser.parse(%{@unauthorized | status_code: 415})
-  end
-
-  @tag :pending
-  test "parses 5xx as server error" do
-    assert {:error, :server_error} = HttpResponseParser.parse(@server_error)
-  end
-
-  ######### FIXTURES #########
   @json %Response{
     body:
       "{\"forms\":[{\"name\":\"ditto\",\"url\":\"https://pokeapi.co/api/v2/pokemon-form/132/\"}],\"height\":3,\"id\":132,\"is_default\":true,\"name\":\"ditto\",\"order\":203,\"types\":[{\"slot\":1,\"type\":{\"name\":\"normal\",\"url\":\"https://pokeapi.co/api/v2/type/1/\"}}],\"weight\":40}",
@@ -307,4 +235,11 @@ defmodule ElixirWorkshop.HttpResponseParserTest do
     },
     request_url: "https://pokeapi.co/api/v2/pokemon/does-not-exist"
   }
+
+  def json, do: @json
+  def plain_text, do: @plain_text
+  def no_content, do: @no_content
+  def not_found, do: @not_found
+  def unauthorized, do: @unauthorized
+  def server_error, do: @server_error
 end
