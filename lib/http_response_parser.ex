@@ -6,6 +6,7 @@ defmodule HttpResponseParser do
   @doc """
   Parses an http response into an :ok or :error tuple
   """
-  def parse(response) do
+  def parse(_response) do
+    raise "Not yet implemented"
   end
 end
