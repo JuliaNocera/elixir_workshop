@@ -54,13 +54,6 @@ iex> HttpResponseParser.parse(%{})
 :not_yet_implemented
 ```
 
-You should see a runtime error assuming you have not changed the implementation
-of the `HttpResponseParser.parse/1` function.
-
-```sh
-
-```
-
 ### Getting documentation for a module
 
 Elixir has first class support for documentation within code. To access the
