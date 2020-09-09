@@ -51,14 +51,14 @@ This will allow you to interact with this project. Try running the following:
 
 ```elixir
 iex> HttpResponseParser.parse(%{})
+:not_yet_implemented
 ```
 
 You should see a runtime error assuming you have not changed the implementation
 of the `HttpResponseParser.parse/1` function.
 
 ```sh
-** (RuntimeError) Not yet implemented
-    (elixir_workshop 0.1.0) lib/http_response_parser.ex:10: HttpResponseParser.parse/1
+
 ```
 
 ### Getting documentation for a module
@@ -84,3 +84,28 @@ iex> h String.split/2
 
 You should see the documentation for the `String.split/2` function printed to
 the screen.
+
+### Recompiling
+
+Since Elixir needs to be compiled before it can be evalated, this means that
+changes to your application are not reflected in `iex`. If you make changes to
+your app code, you can use the `recompile/0` function to recompile your
+application. This will recompile your entire app.
+
+To try this out, fire up `iex` and run the following:
+
+```elixir
+iex> HttpResponseParser.parse(%{})
+:not_yet_implemented
+```
+
+Now make a change to the implementation of `HttpResponseParser.parse/1`, for
+example, changing the `:not_yet_implemented` atom to `:todo`
+
+```elixir
+iex> recompile()
+Compiling 1 file (.ex)
+:ok
+iex> HttpResponseParser.parse(%{})
+:todo
+```
