@@ -428,6 +428,7 @@ iex> head
 1
 iex> tail
 [2, 3]
+iex> 1 = hd([1, 2, 3])
 
 # Tuples
 # Note the `_` here. This means ignore the value and do not try and bind it
