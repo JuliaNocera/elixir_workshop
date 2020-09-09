@@ -115,9 +115,9 @@ akin to Node's `npm` tool.
 
 ### `mix.exs`
 
-The `mix.exs` file defins our Elixir project. Here you can see information about
-our app, such as its version, or the compatible Elixir versions. This is the
-file that you will update when you need to install dependencies for your
+The `mix.exs` file defines our Elixir project. Here you can see information
+about our app, such as its version, or the compatible Elixir versions. This is
+the file that you will update when you need to install dependencies for your
 project.
 
 To learn more about configuring the project, read the [`mix`
