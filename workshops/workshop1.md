@@ -383,3 +383,74 @@ iex> case File.read("lib/http_response_parser.ex") do
 ...> end
 "Success defmodule HttpResponseParser do\n ..."
 ```
+
+### Pattern matching
+
+You can use the match operator (`=`) to match expressions. Bear in mind that the
+`=` operator in Elixir is used for matching and works different than the
+assignment operator in other languages.
+
+You can use the match operator like assignment. In Elixir, this is called
+binding a variable to a value.
+
+```elixir
+iex> age = 25
+25
+```
+
+Now that `age` is bound to the value `25`, we can match against it by reversing
+the left and right hand side of the expression.
+
+```elixir
+iex> 25 = age
+25
+```
+
+I tend to think of the match operator a bit closer to how you would use it in
+Math. You want the left and right sides of the `=` to be balanced. If Elixir
+cannot match, you will get a match error:
+
+```sh
+** (MatchError) no match of right hand side value: 25
+```
+
+You can match against all kinds of data structures, not just numbers.
+
+```elixir
+# Maps
+iex> %{make: make} = %{make: "Subaru", model: "Ascent"}
+iex> make
+"Subaru"
+
+# Lists
+iex> [head | tail] = [1, 2, 3]
+iex> head
+1
+iex> tail
+[2, 3]
+
+# Tuples
+# Note the `_` here. This means ignore the value and do not try and bind it
+iex> {:ok, _} = {:ok, "Elixir is so cool!"}
+```
+
+You can also pattern match within function signatures:
+
+```elixir
+defmodule HttpResponseParser do
+  # Here we match only if the argument is a map and the `status_code` key is
+  # set to `200`. We can then bind the entire argument to a variable called
+  # `response`, which we can then use in the implementation of the function
+  def parse(%{status_code: 200} = response) do
+    {:ok, response.body}
+  end
+
+  # Only match when the status code is `204`. We don't care about the rest of
+  # the map
+  def parse(%{status_code: 204}), do: {:ok, "ok"}
+
+  # Match against everything else (`_`). If we haven't handled it above, we want
+  # to signal an error
+  def parse(_), do: {:error, :server_error}
+end
+```
