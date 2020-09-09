@@ -2,10 +2,11 @@
 
 ## Setup
 
-Ensure you have a Elixir and Erlang installed. If you would like to manage
-multiple Elixir and Erlang versions, I recommend using [asdf](https://asdf-vm.com)
+Ensure you have Elixir and Erlang installed. I recommend using
+[asdf](https://asdf-vm.com) to manage multiple Elixir/Erlang versions. To setup
+`asdf`, follow the setup instructions [on the documentation](https://asdf-vm.com/#/core-manage-asdf-vm?id=install)
 
-Once you have `asdf`, run the following
+Once you have `asdf`, setup the project with the following:
 
 ```sh
 git clone git@github.com:jerelmiller/elixir_workshop.git
