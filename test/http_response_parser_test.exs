@@ -9,7 +9,7 @@ defmodule ElixirWorkshop.HttpResponseParserTest do
 
   @tag :pending
   test "Decodes JSON responses" do
-    response = Pokeapi.TestData.plain_text()
+    response = Pokeapi.TestData.json()
 
     assert {:ok,
             %{
@@ -53,7 +53,7 @@ defmodule ElixirWorkshop.HttpResponseParserTest do
 
   @tag :pending
   test "parses 404 as not found" do
-    response = Pokeapi.TestData.no_content()
+    response = Pokeapi.TestData.not_found()
 
     assert {:error, :not_found} = HttpResponseParser.parse(response)
   end
@@ -84,5 +84,17 @@ defmodule ElixirWorkshop.HttpResponseParserTest do
     response = Pokeapi.TestData.server_error()
 
     assert {:error, :server_error} = HttpResponseParser.parse(response)
+
+    assert {:error, :server_error} =
+             HttpResponseParser.parse(%{response | status_code: 501})
+
+    assert {:error, :server_error} =
+             HttpResponseParser.parse(%{response | status_code: 502})
+
+    assert {:error, :server_error} =
+             HttpResponseParser.parse(%{response | status_code: 503})
+
+    assert {:error, :server_error} =
+             HttpResponseParser.parse(%{response | status_code: 504})
   end
 end
